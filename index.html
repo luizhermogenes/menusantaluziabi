@@ -1,0 +1,997 @@
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!-- Controle de cache -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <title>Painéis de BI Setoriais - Santa Luzia</title>
+    <link rel="shortcut icon" type="image/x-icon" href="images/icon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Estilo geral */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eaeef1; /* Tom mais suave */
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+
+        header {
+            display: flex; /* Ativa o flexbox */
+            align-items: center; /* Centraliza verticalmente */
+            height: 50px; /* Altura do header */
+        }
+
+        img.logo {
+            width: 50px;
+            height: 50px;
+        }
+
+        h2 {
+            color: #000000; /* Texto branco para contraste */
+            margin-left: 10px;
+            font-size: 22px;
+        }
+
+        #myInput {
+            width: 100%;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            border: 1px solid #999;
+            border-radius: 10px; /* Bordas arredondadas */
+            background-color: #fff;
+            color: #333;
+            box-shadow: none;
+            outline: none;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+
+        #myInput:focus {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: #fff;
+            border-radius: 10px;
+            color: #333;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra mais forte */
+            transition: all 0.3s ease;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4A90E2; /* Azul do cabeçalho */
+            color: #fff; /* Texto do cabeçalho branco */
+            font-weight: normal;
+            cursor: pointer;
+            position: relative;
+            transition: background-color 0.3s ease;
+        }
+
+        th:hover {
+            background-color: #357ABD; /* Tom mais escuro ao passar o mouse */
+        }
+
+        th .sort-arrow {
+            position: absolute;
+            right: 8px;
+            font-size: 12px;
+            transition: transform 0.3s ease;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f7f9fc; /* Cores intercaladas */
+        }
+
+        tr:nth-child(odd) {
+            background-color: #ffffff;
+        }
+
+        tr:hover {
+            background-color: #d1e0ff; /* Tom mais escuro ao passar o mouse */
+        }
+
+        a {
+            color: #4A90E2; /* Azul para links */
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: normal;
+        }
+
+        a:hover {
+            color: #2c598c; /* Tom mais escuro ao passar o mouse */
+            text-decoration: underline;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 14px;
+            color: #777;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        #myTable {
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .whatsapp-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #25D366;
+            color: white;
+            border-radius: 50%;
+            width: 50px;  /* Ajustado para 50px */
+            height: 50px;  /* Ajustado para 50px */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+            transition: box-shadow 0.3s ease;
+            text-decoration: none;
+        }
+
+        .whatsapp-icon:hover {
+            box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .whatsapp-icon img {
+            width: 45px;  /* Ajustado para um tamanho menor */
+            height: 45px;  /* Ajustado para um tamanho menor */
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <img src="images/logo.png?v=1.0" alt="Logo" class="logo">
+        <h2>Painéis gerenciais (BI) - Santa Luzia</h2>
+    </header>
+
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Pesquise pelo seu relatório..." title="Digite o título ou código do relatório">
+
+    <table id="myTable">
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)" style="width:60%;">Descrição<span class="sort-arrow" id="arrow0"></span></th>
+                <th onclick="sortTable(2)" style="width:10%;">Código<span class="sort-arrow" id="arrow2"></span></th>
+            </tr>
+        </thead>
+        <tbody id="tableData">
+	<tr data-link="https://app.powerbi.com/reportEmbed?reportId=2e45238b-aed8-470b-942e-b73fc27999c9&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false">
+            <td>Produção - Visão geral dos setores</td>
+            <td>9988</td>
+        </tr>
+        <tr data-link="https://app.powerbi.com/reportEmbed?reportId=a55f22d6-1c82-45f2-93fc-3a17778747c2&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection88708ef744101986b70d">
+            <td>Produção - Extrusão Densidade</td>
+            <td>9991</td>
+        </tr>
+	<tr data-link="https://app.powerbi.com/reportEmbed?reportId=a55f22d6-1c82-45f2-93fc-3a17778747c2&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection">
+  	  <td>Produção - Extrusão Produção</td>
+	  <td>9994</td>
+	</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=a55f22d6-1c82-45f2-93fc-3a17778747c2&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSectionf9d67a54262a01eb088a">
+<td>Produção - Extrusão Refugo</td>
+<td>9993</td>
+</tr>
+
+  <tr data-link="https://app.powerbi.com/reportEmbed?reportId=ec08b319-14a8-4439-ab69-0a85912081ff&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection">
+  <td>Produção - Mixer Produção</td>
+  <td>9992</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=a78c10a3-352b-46b9-90f2-0b97f93c9455&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection">
+  <td>Produção - Peletização Produção</td>
+  <td>9989</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=9681a46d-d3f0-4155-a98a-3f1abdac38e9&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection">
+  <td>Produção - Extrusão PCP</td>
+  <td>9990</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=a78c10a3-352b-46b9-90f2-0b97f93c9455&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection3dfcd108aa107de3c8ec">
+  <td>Produção - Peletização Refugo</td>
+  <td>9987</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=434fc234-1d0a-4ccd-a71d-54908d264a85&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Produção - Pintura Produção</td>
+<td>9986</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=434fc234-1d0a-4ccd-a71d-54908d264a85&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection00c374ca873d57000a6a">
+<td>Produção - Pintura Refugo</td>
+<td>9985</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=87b3cdb8-6ef0-4342-bbbf-605369572662&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Produção - Hotstamping Produção</td>
+<td>9982</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=87b3cdb8-6ef0-4342-bbbf-605369572662&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSectionf9d67a54262a01eb088a">
+<td>Produção - Hotstamping Refugo</td>
+<td>9981</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=1939f6e7-e337-497a-8169-aa71ed89943a&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection7844cb09982852460805">
+<td>Produção - Embalagem Produção</td>
+<td>9983</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=1939f6e7-e337-497a-8169-aa71ed89943a&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSectioncb6346b48500013cb7ea">
+<td>Produção - Embalagem Refugo</td>
+<td>9984</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=877055f6-0ed7-4a2e-a735-d1643004ebde&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSectionc7d011ff8321d3f96818">
+<td>Produção - Retrabalho acabamento</td>
+<td>9970</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=e0264e93-2a56-4706-be3e-0df4a18429f4&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLWJyYXppbC1zb3V0aC1iLXByaW1hcnktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection890687461eb1fd44d5cc">
+<td>Qualidade - Liberação Condicional Extrusão</td>
+<td>9977</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=e0264e93-2a56-4706-be3e-0df4a18429f4&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLWJyYXppbC1zb3V0aC1iLXByaW1hcnktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSectiond180bbcaef51e244a301">
+<td>Qualidade - Liberação Condicional Acabamento</td>
+<td>9978</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=138f0a3d-0e5c-478c-b1c6-25da2b96081b&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Segurança do trabalho - Controle de afastamento de colaboradores</td>
+<td>9998</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=d2d5f19a-a718-4967-b6b4-8f84b157605d&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSectionf03afe34bad68ac297b4">
+<td>Produção - Expedição</td>
+<td>9976</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=a232ece7-ca6f-4878-a6bc-3b34919412a4&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection1a83357b05a0599822eb">
+<td>Vendas - PVM</td>
+<td>9973</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=9af4189e-bde6-451c-b5c9-2d19db3104e4&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Manutenção - Visão geral OS</td>
+<td>9972</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=05d74225-93fc-49e0-acad-03a3aa720e7f&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38">
+<td>Curitibanos - OMIL</td>
+<td>9971</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=7bc7c933-e697-4a3e-96d4-fc50d75e3860&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLWJyYXppbC1zb3V0aC1iLXByaW1hcnktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection515243c7d6ca99db1de8">
+<td>SAC - Protocolos</td>
+<td>9974</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=cd13861a-5a32-4e82-9a0b-306764e5f0db&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLWJyYXppbC1zb3V0aC1iLXByaW1hcnktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection3cbf6658bff36f8be0a4">
+<td>Contábil - Margem de Contribuição</td>
+<td>9969</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=b8b81bf2-3896-4e71-b384-82be97adab78&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false">
+<td>Vendas - Entrada de pedidos</td>
+<td>9968</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=498efba2-71a2-4b5a-a81b-659a2b2ed0be&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLWJyYXppbC1zb3V0aC1iLXByaW1hcnktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D&navContentPaneEnabled=false&pageName=ReportSectionbbf8eb140278b184c103">
+<td>Compras - Orderns de compra</td>
+<td>9967</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=390a469a-8924-4657-a4db-57a2a1b71b8d&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLWJyYXppbC1zb3V0aC1iLXByaW1hcnktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection">
+<td>RH - PCE (Pesquisa de engajamento 2022)</td>
+<td>9966</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=689d06f8-5bec-4e87-82ef-9c4f99094d5f&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLWJyYXppbC1zb3V0aC1iLXByaW1hcnktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection58b299a675da830e0059">
+<td>Captação - Entrada de Matéria prima</td>
+<td>9965</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=64d5098c-f5b3-4950-be1f-c6f5449a6303&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLWJyYXppbC1zb3V0aC1iLXByaW1hcnktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Vendas - Exportação</td>
+<td>9964</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=de7253f6-4e0f-43d7-9e5a-cad09bbca468&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLWJyYXppbC1zb3V0aC1iLXByaW1hcnktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Direção - Indicadores</td>
+<td>9963</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=c4b695dc-aa57-49d4-9723-ef8b38e5b975&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection83c05ca454e1cae079e6">
+<td>Compras - Entrada Nfe</td>
+<td>9962</td>
+</tr>
+
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=24eef1e6-e016-4939-b68a-7462d689028d&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection6cd1f752ad9f6cf59bdd">
+<td>Custos - Monitoramento de consumo</td>
+<td>9961</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/links/BFlSDd2CIQ?ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&pbi_source=linkShare&chromeless=True">
+<td>Santa Luzia - Indicadores</td>
+<td>9960</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/links/LLxcUhuhaR?ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&pbi_source=linkShare&chromeless=True">
+<td>Qualidade - Indicadores 5S</td>
+<td>9959</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=481259c7-3dc4-4514-9545-cccf2f5c1249&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection831673e8ba90ed484950">
+<td>Produção - OEE</td>
+<td>9958</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=538253dc-0ccb-4b76-a0a6-2d28add399be&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLWJyYXppbC1zb3V0aC1iLXByaW1hcnktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSectionc84979d4b67ae2880224">
+<td>Custos - Eficiência Unid II</td>
+<td>9957</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/view?r=eyJrIjoiZjA5Y2U2YjktNjZlOS00MzMzLWEwZDItNDA3NjZiYWRkMjM3IiwidCI6IjdmNTc2NjNjLWZkZGMtNDUzNi04ZDg4LTg3ZmQwOGNkZWIzOCJ9&pageName=ReportSectione4a16102008a9adedac2&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSectione4a16102008a9adedac2">
+<td>Market - Informativo de Captação</td>
+<td>9956</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=9673b43d-0373-499d-8fc1-083545d5481b&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection831673e8ba90ed484950&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection6794f35ac0b862eb533c">
+<td>Produção - Analíticos análise de pedidos integrada acabamento e extrusão</td>
+<td>9955</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=78084e41-419a-4cdc-8bb4-24c68461bf33&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Produção - Tamanho de OP</td>
+<td>9954</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=d3e4901c-6131-4d63-8467-d26a31fdf0a0&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Produção - Analíticos mix produtos por setor</td>
+<td>9953</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=e8d29b0b-2550-4db4-8ebb-01eebfbd197e&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Produção - Estoque de produto acabado</td>
+<td>9952</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=c713e9df-3188-43af-92bb-e3488db6db72&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLWJyYXppbC1zb3V0aC1iLXByaW1hcnktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSectioncd1fb1db2658e52fc188">
+<td>BI - Desenvolvimentos dos paineis</td>
+<td>9951</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=9673b43d-0373-499d-8fc1-083545d5481b&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection831673e8ba90ed484950">
+<td>Vendas - Analíticos Pedidos entrada</td>
+<td>9950</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=8db2b387-e155-46c5-938c-780ecfc51833&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLWJyYXppbC1zb3V0aC1iLXByaW1hcnktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Logística - Embarques</td>
+<td>9949</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=f6441ce4-ce5d-4204-b221-af4cb9391e7b&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLWJyYXppbC1zb3V0aC1iLXByaW1hcnktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Vendas - Faturamento</td>
+<td>9948</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=8cbaeef3-9e1f-477d-be5c-75f76326a7e0&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLWJyYXppbC1zb3V0aC1iLXByaW1hcnktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection6bd3a2ed7baf74d189d2">
+<td>Vendas - Analíticos desempenho das linhas nos pedidos</td>
+<td>9947</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=92ae2480-455d-4026-b82b-d0716d3786b4&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLWJyYXppbC1zb3V0aC1iLXByaW1hcnktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Unidade 2 - Produção Gesso</td>
+<td>9946</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=92ae2480-455d-4026-b82b-d0716d3786b4&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLWJyYXppbC1zb3V0aC1iLXByaW1hcnktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSectionc4c53cf1a69c289a5b8b">
+<td>Unidade 2 - Produção Pintura</td>
+<td>9945</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=92ae2480-455d-4026-b82b-d0716d3786b4&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLWJyYXppbC1zb3V0aC1iLXByaW1hcnktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSectioncfbfd32fb42d82f699c1">
+<td>Unidade 2 - Produção embalagem</td>
+<td>9944</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=92ae2480-455d-4026-b82b-d0716d3786b4&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLWJyYXppbC1zb3V0aC1iLXByaW1hcnktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSectionf9d67a54262a01eb088a">
+<td>Unidade 2 - Refugo gesso</td>
+<td>9943</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=92ae2480-455d-4026-b82b-d0716d3786b4&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLWJyYXppbC1zb3V0aC1iLXByaW1hcnktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection351411af9280f656242a">
+<td>Unidade 2 - Refugo pintura</td>
+<td>9942</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=689d06f8-5bec-4e87-82ef-9c4f99094d5f&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&config=eyJjbHVzdGVyVXJsIjoiaHR0cHM6Ly93YWJpLWJyYXppbC1zb3V0aC1iLXByaW1hcnktcmVkaXJlY3QuYW5hbHlzaXMud2luZG93cy5uZXQvIn0%3D&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection68a8d6258559320144a4">
+<td>Captação - Analíticos densidade de fornecedores captação</td>
+<td>9941</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=bd2e1b7a-6998-4175-bbe6-f47551a86ea1&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection04e1ad26147d6a066692">
+<td>Sul Norte - DRE</td>
+<td>9940</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=83ca1d49-f9ca-406f-991f-bfd091a06a46&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection83c05ca454e1cae079e6">
+<td>Vendas - Comissão de epresentantes</th>
+<td>9939</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=8cf1fc53-2999-4e76-a596-444f09a8c35f&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection6b75f80ed0e0c6e038e2">
+<td>Manutenção - OS</td>
+<td>9938</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=a21f0d5e-9940-4a37-b135-8827012b7c05&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection6b75f80ed0e0c6e038e2">
+<td>Financeiro - Desconto concedidos</td>
+<td>9937</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=b50dedd4-ca9e-414c-838b-e6e1d2917cd5&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection6b75f80ed0e0c6e038e2">
+<td>P&D - Projetos planner</td>
+<td>9936</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=e6c47392-623b-45c3-b28b-f9412587c40f&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection6b75f80ed0e0c6e038e2">
+<td>Marketing - Amostras</td>
+<td>9935</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=5feec306-d939-4859-a3b2-24293512e305&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSectionf55663e3bcac7b4e74c5">
+<td>Marketing - Informativo de Captação en-US</td>
+<td>9934</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=5feec306-d939-4859-a3b2-24293512e305&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSectionc44956c5b1260a45dbd6">
+<td>Marketing - Informativo de Captação es-ES</td>
+<td>9933</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=3872e2ca-be72-4636-9c5d-17c66afae8b6&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection6b75f80ed0e0c6e038e2">
+<td>Produção - PCP Acompanhamento</td>
+<td>9932</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=4ccd9f41-e4da-48a7-9c87-daa3d5e61748&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection6b75f80ed0e0c6e038e2">
+<td>Compras - Aquisição Toras</td>
+<td>9931</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/links/dEHTxvEphb?ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&pbi_source=linkShare&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection6b75f80ed0e0c6e038e2">
+<td>Qualidade - Indicadores de sustentabilidade </td>
+<td>9930</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=e32adc7c-9fa0-454b-9bcb-2d7b79851bab&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection541ea70ddd090e02a500">
+<td>Vendas - Análise de Representante</td>
+<td>9929</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=741186cc-5242-488b-abf7-f279fc0234b2&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection6ce1853d9bde301006ee">
+<td>Contabilidade - DRE 98</td>
+<td>9928</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=1ac3bc8e-02a1-4930-b445-bda71beb07f3&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection6b75f80ed0e0c6e038e2">
+<td>Contabilidade - DRE 99</td>
+<td>9927</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=354aa8a0-36ad-44d6-b9d9-3c6ed1a9a0a3&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection6b75f80ed0e0c6e038e2">
+<td>Curitibanos - Secagem</td>
+<td>9926</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=5a06abe3-37c2-45d2-b014-6223615308f5&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection6b75f80ed0e0c6e038e2">
+<td>Custos - Ficha tecnica real vs previsto</td>
+<td>9925</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=e5becb24-d3c6-4ecc-9752-489a1acb1d67&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&pageName=ReportSection9ed88621e08e2a39474e">
+<td>Custos - Pintura consumo de tintas</td>
+<td>9923</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=8d71c82a-4e75-4984-b108-7cf85d499ae7&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Produção - Indicadores Francisco</td>
+<td>9921</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=741186cc-5242-488b-abf7-f279fc0234b2&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection2b7a1f6026ceba08d718">
+<td>Contabilidade - DRE 98 Competência</td>
+<td>9920</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=85cebcdc-a1f4-4065-8f1e-dca56a1a1cba&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection965055f451202fef23f">
+<td>Vendas - Devoluções</td>
+<td>9919</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=3af15fc0-428c-4f0f-a5ae-240e6919beec&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSectionccfb93ca96b772cb22df">
+<td>Vendas - Analíticos pedidos atendidos</td>
+<td>9918</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=ed990278-c4cb-4b73-8c51-c2db025d2def&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection6b75f80ed0e0c6e038e2">
+<td>Curitibanos - Plaina</td>
+<td>9917</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=7c1e48cd-a329-4c02-837c-275f9abfe2ef&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Logística - Analíticos relatório de embarques</td>
+<td>9916</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=a230f412-c7fb-4139-be1f-32c5b39262bb&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Logística - Lead time</td>
+<td>9915</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/links/8RlD9TCkD0?ctid=f5537007-5245-4aa7-839d-393fae05e13c&pbi_source=linkShare&chromeless=true">
+<td>Sul Norte - Indicadores</td>
+<td>9914</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=3aae8287-1bde-4946-97da-33372ff07fcb&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&pageName=ReportSection54556429168397494bb7">
+<td>Curitibanos - Aquisição florestal</td>
+<td>9913</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=3aae8287-1bde-4946-97da-33372ff07fcb&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Curitibanos - Produção - Serraria</td>
+<td>9912</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=790eb7be-f3d3-46e6-9a6a-7a4ab26feddc&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38">
+<td>Curitibanos - Plaina versao 2</td>
+<td>9911</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=ce98bfb7-f7d4-42d6-861d-22a4cb79d980&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38">
+<td>Curitibanos - Refiladeira</td>
+<td>9910</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=80d02c7b-918a-4ca2-8a58-10494c577491&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38">
+<td>Curitibanos - Finger</td>
+<td>9909</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=47fb9174-64b2-4ed5-94ea-c90ea54d710b&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38">
+<td>Curitibanos - Scanner</td>
+<td>9908</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=e2c7ef98-6585-4d66-a07c-b65e45902c9c&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection6b75f80ed0e0c6e038e2">
+<td>Custos - Analíticos indicadores de custo de produção</td>
+<td>9907</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=cd13861a-5a32-4e82-9a0b-306764e5f0db&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSectionbfd7c52f39f5e7477150">
+<td>Contabilidade - Simulador preço médio vs volume</td>
+<td>9906</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=1717ecfe-41f1-4207-bbbc-2d6cd56f6903&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection6b75f80ed0e0c6e038e2">
+<td>Vendas - RFV (Recência, Frequência e valor)</td>
+<td>9905</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=a230f412-c7fb-4139-be1f-32c5b39262bb&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSectionabe7669c4ea41a907e01">
+<td>Logistica - Analíticos centro de distribuição</td>
+<td>9904</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=926f18fa-d4c2-4fb6-8f58-c27136a75922&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection6b75f80ed0e0c6e038e2">
+<td>RH - Quadro de lotação</td>
+<td>9903</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=ef9b6a72-ab24-4bb4-b8a5-51bcabda6c22&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Curitibanos - Recebimento serraria</td>
+<td>9902</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=efb952dc-b8e8-42a9-a905-651a4313d7a3&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection40c52727601110b1ad39">
+<td>Manutenção - Peças custos e serviços</td>
+<td>9901</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=efb952dc-b8e8-42a9-a905-651a4313d7a3&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSectionc41c501405e609dab430">
+<td>Manutenção - Custos trabalhistas</td>
+<td>9900</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=efb952dc-b8e8-42a9-a905-651a4313d7a3&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSectiond83cf88dba900002dd80">
+<td>Manutenção - Custos gerais</td> 
+<td>9899</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=7b0d9a16-9853-464b-8ce1-1aa6bfe54d6c&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection">
+<td>RH - PCE (Pesquisa de engajamento) 2023</td>
+<td>9898</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=dcdf97bd-e39f-4425-b5aa-a5b1a5b8711b&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=">
+<td>Contabilidade - Gastos por veículo</td>
+<td>9897</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=99352d97-e3dc-420f-bec3-93d085a5192d&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38">
+<td>Curitibanos - Custos por setor</td>
+<td>9896</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=48670553-c177-4ee2-9369-77ff7b5d16cc&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38">
+<td>Embalagem - Consumo de Caixas</td>
+<td>9895</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=44c93627-43db-4bf5-a8c5-882b10aeef1d&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Vendas - Cesta de compras</td>
+<td>9894</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=44c93627-43db-4bf5-a8c5-882b10aeef1d&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection0dc663b251214779cd73">
+<td>Vendas - Cohort</td>
+<td>9893</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=b3cf4044-96e6-475b-98d6-8144e4b8b1e0&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Produção - Estoque e mistura programação de consumo</td>
+<td>9892</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=4f155e22-7929-4bbc-887f-943e42518edc&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=true&pageName=ReportSectione971c7d2caf5bd314b42">
+<td>Qualidade - Programa 5S</td>
+<td>9891</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=4f155e22-7929-4bbc-887f-943e42518edc&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection6622a899894ce5f164b6">
+<td>Qualidade - Programa 5s setorial</td>
+<td>9890</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=aa8aa0b7-e530-4dd5-a743-2e94593ea1e5&autoAuth=true&ctid=f5537007-5245-4aa7-839d-393fae05e13c">
+<td>Sul Norte - Operacional</td>
+<td>9889</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=6585dd01-e05a-4356-a262-7b16c284b928&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38">
+<td>Embalagem - Conferência de etiquetas</td>
+<td>9888</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=70b62d30-e6bc-4b4b-8d07-571d8d1fa011&autoAuth=true&ctid=f5537007-5245-4aa7-839d-393fae05e13c">
+<td>Sul Norte - Line-up</td>
+<td>9887</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=19899aa5-b34b-4310-b535-879d8d3c83fe&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection730c20ed540af5b5a216">
+<td>Produção - Paradas de máquina</td>
+<td>9886</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=f6b33b91-a658-411f-a201-d0da10fd8c20&autoAuth=true&ctid=f5537007-5245-4aa7-839d-393fae05e13c">
+<td>Sul Norte - Compras</td>
+<td>9885</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=2e734755-9ddb-408b-aa54-db11ccb83899&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection">
+<td>PROECO - DRE</td>
+<td>9884</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=b9349692-18b6-412e-8f9a-dd6d647b06d9&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection541ea70ddd090e02a500">
+<td>Vendas - Representante</td>
+<td>9883</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=acbc60c1-9432-467a-9ed7-6dfe6e09c66b&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&navContentPaneEnabled=false">
+<td>Produção - Carteira ( streaming )</td>
+<td>9882</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=1e7bee5b-d617-4311-b9a1-538f6de0ebba&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection35f2e576b63b7a8038a9">
+<td>Custos - Análise de preços</td>
+<td>9881</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=62cd1834-acb4-43cc-b4c7-106b9d8127bc&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSectionf8a9cc1c6f8d5788e13a">
+<td>Contabilidade  - Analíticos margem</td>
+<td>9880</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=a9fe76ac-914b-43fa-a532-532934084e58&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection35918df31b2307a571c2">
+<td>Contabilidade - Analíticos DRE</td>
+<td>9879</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=05d0a7a3-8731-456c-98d0-8eabeb191b5f&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSectiond746933bc658547d0336">
+<td>Contabilidade  - Gestão de estoque</td>
+<td>9878</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=e6c47392-623b-45c3-b28b-f9412587c40f&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection1f2968c78f94809e5528">
+<td>Marketing - Retorno sobre as amostras</td>
+<td>9877</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=db2e9282-5213-4221-a6b5-38275e73b122&autoAuth=true&ctid=f5537007-5245-4aa7-839d-393fae05e13c">
+<td>Sul Norte - Controle de combustível</ts>
+<td>9876</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=55c9c38f-fc55-4515-9fa6-69a6059b518b&autoAuth=true&navContentPaneEnabled=false">
+<td>RH - Painel geral</td>
+<td>9875</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=db0b9fd1-0c46-45e4-bb77-33580e7afa57&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Custos - Custos de captação</td>
+<td>9874</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=e7c92349-cf03-413e-b2a7-1cdf938dcc84&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Financeiro - Visão geral</td>
+<td>9873</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=757f541d-ffea-4113-b6f5-4bd27e5901ce&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=true&pageName=ReportSection">
+<td>Vendas - TV comercial</td>
+<td>9872</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=365a3d92-4228-470f-9ada-efd021825df1&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Produção - Menu Francisco</td>
+<td>9871</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=d6a0e9f5-02af-4054-b4c7-56c4f9785385&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Outsourcing - Desempenho</td>
+<td>9870</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=de84c351-9e2d-413b-808a-d1e206b15995&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Vendas - TV 1 (Streaming)</td>
+<td>9869</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=de84c351-9e2d-413b-808a-d1e206b15995&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection541ea70ddd090e02a500">
+<td>Vendas - TV 2(Streaming)</td>
+<td>9868</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=de84c351-9e2d-413b-808a-d1e206b15995&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=05531acce7f7cadf7052">
+<td>Vendas - TV 3(Streaming)</td>
+<td>9867</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=d1fa427d-b8c9-4722-9fee-7521b7aafcac&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Produção - Necessidade carteira</td>
+<td>9866</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=05d0a7a3-8731-456c-98d0-8eabeb191b5f&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=537fa3b970646b0089b7">
+<td>Contabilidade - Estoque por Unidade de negócio</td>
+<td>9865</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=ea58b607-bbca-4d5d-808c-40ae6756cafe&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=">
+<td>Unidade 3 - Produção moinho</td>
+<td>9864</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=ea58b607-bbca-4d5d-808c-40ae6756cafe&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=">
+<td>Unidade 3 - Qualidade de MP</td>
+<td>9864</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=dcdf97bd-e39f-4425-b5aa-a5b1a5b8711b&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=">
+<td>Sul Norte  - Contabilidade - Gastos por veículo </td>
+<td>9897</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=0f2c5a2d-cda4-4a1b-b3fd-ee33017b7714&autoAuth=true&ctid=f5537007-5245-4aa7-839d-393fae05e13c&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=">
+<td>Sul Norte  - Faturamento - Contas a pagar </td>
+<td>9863</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=334e0cec-c73b-48d3-b936-b07473f5a95b&autoAuth=true&ctid=f5537007-5245-4aa7-839d-393fae05e13c">
+<td>Sul Norte  - Faturamento - Gerencial </td>
+<td>9862</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=e8d29b0b-2550-4db4-8ebb-01eebfbd197e&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection74fed2995d0f820ed5f7">
+<td>Produção - Estoque de MP</td>
+<td>9861</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=a9385044-7006-4660-89c9-399a5ad9494e&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Produção - RFID</td>
+<td>9860</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=6fd1612e-2e18-4f9e-b9f5-3d72639e1f73&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=7dbfbce0ce05db3b224b">
+<td>Contabilidade - DRE por Subcanal</td>
+<td>9859</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=53d810e8-00ac-49b2-8a95-0d1c70123e9a&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38">
+<td>RH - PCE (Pesquisa de engajamento 2025)</td>
+<td>9858</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=e29765a2-3b51-4359-a9e8-c679f78cdf63&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Custos - Estoque manutenção</td>
+<td>9857</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=4ed77a43-3896-4c41-bc6a-f47e0608d542&autoAuth=true&ctid=f5537007-5245-4aa7-839d-393fae05e13c">
+<td>Sul Norte - Manuteção - PCM</td>
+<td>9856</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=6fd1612e-2e18-4f9e-b9f5-3d72639e1f73&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&navContentPaneEnabled=false&pageName=d626d1526c5327991466">
+<td>Contabilidade - DRE por Subcanal - Dinâmica e Importados</td>
+<td>9855</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=71d50ff2-4362-4dbb-9844-d6ed9bb4d526&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&navContentPaneEnabled=false">
+<td>RH - Quadro operacional de pessoas</td>
+<td>9854</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=008a6845-faa8-4611-adda-1f2597fc7435&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&navContentPaneEnabled=false">
+<td>Contabilidade - Imobilizados em curso</td>
+<td>9853</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=ea0f7ef0-f409-4f4e-ad2f-001253bd0fa8&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&navContentPaneEnabled=false">
+<td>Sul Norte - Contabilidade - DRE por cliente</td>
+<td>9852</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=28fafc80-07c1-4e0b-8eb7-fadaf83326fa&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=false&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Unidade 3 - Recebimento de MP</td>
+<td>9851</td>
+</tr>
+
+<tr data-link="https://app.powerbi.com/reportEmbed?reportId=d7216430-23c7-48a1-be14-dbbb02e14150&autoAuth=true&ctid=7f57663c-fddc-4536-8d88-87fd08cdeb38&filterPaneEnabled=true&navContentPaneEnabled=false&pageName=ReportSection">
+<td>Vendas - Indicadores gerais para gerência</td>
+<td>9850</td>
+</tr>
+
+
+</tbody>
+
+    </table>
+
+    <a href="https://wa.me/5548999750359?text=Olá%2C%20tudo%20bem%3F%20Vim%20pelo%20Pain%C3%A9is%20gerenciais%20%28BI%29%20-%20Santa%20Luzia" target="_blank" class="whatsapp-icon">
+        <img src="images/whatsapp-icon.png" alt="WhatsApp">
+    </a>
+
+  <footer>
+        &copy; Desenvolvido por Luiz Hermógenes - Especialista em BI - luiz@industriasantaluzia.com.br .
+    </footer>
+
+    <script>
+function myFunction() {
+    let input = document.getElementById('myInput');
+    let filter = input.value.toUpperCase();
+    let table = document.getElementById('myTable');
+    let tr = table.getElementsByTagName('tr');
+
+    for (let i = 1; i < tr.length; i++) {
+        let tdDescricao = tr[i].getElementsByTagName('td')[0];
+        let tdCodigo = tr[i].getElementsByTagName('td')[1];
+        if (tdDescricao || tdCodigo) {
+            let txtDescricao = tdDescricao?.textContent || '';
+            let txtCodigo = tdCodigo?.textContent || '';
+            if (
+                txtDescricao.toUpperCase().indexOf(filter) > -1 ||
+                txtCodigo.toUpperCase().indexOf(filter) > -1
+            ) {
+                tr[i].style.display = '';
+            } else {
+                tr[i].style.display = 'none';
+            }
+        }
+    }
+}
+
+
+        function sortTable(n) {
+            let table = document.getElementById('myTable');
+            let rows = table.rows;
+            let switching = true;
+            let dir = 'asc';
+            let switchCount = 0;
+            let i, x, y, shouldSwitch;
+
+            while (switching) {
+                switching = false;
+                let shouldSwitch = false;
+
+                for (i = 1; i < (rows.length - 1); i++) {
+                    let x = rows[i].getElementsByTagName('TD')[n];
+                    let y = rows[i + 1].getElementsByTagName('TD')[n];
+
+                    if (dir === 'asc') {
+                        if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    } else if (dir === 'desc') {
+                        if (x.innerHTML.toLowerCase() < y.innerHTML.toLowerCase()) {
+                            shouldSwitch = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (shouldSwitch) {
+                    rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+                    switching = true;
+                    switchCount++;
+                } else {
+                    if (switchCount === 0 && dir === 'asc') {
+                        dir = 'desc';
+                        switching = true;
+                    }
+                }
+            }
+        }
+
+	// Faz as linhas da tabela redirecionarem ao link
+	document.querySelectorAll('#tableData tr').forEach(row => {
+    	row.style.cursor = "pointer";
+    	row.addEventListener('click', () => {
+        	const link = row.getAttribute('data-link');
+        	if (link) {
+           	window.open(link, '_blank');
+        	}
+    	});
+	});
+
+    </script>
+</body>
+
+</html>
